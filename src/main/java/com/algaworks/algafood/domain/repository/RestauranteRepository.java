@@ -29,7 +29,7 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long>,
 	
 	int countByCozinhaId(Long cozinha);
 	
-	List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
+//	List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal);
 	//mesmo não implementando esse Repository, ele sabe q tem a implemnetação customizada
 	//tem q ter o sufixo do Repository + "Impl"
 }

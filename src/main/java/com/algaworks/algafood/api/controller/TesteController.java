@@ -14,6 +14,7 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.repository.RestauranteRepositorytImpl;
 
 @RestController
 @RequestMapping("/teste")
@@ -24,6 +25,9 @@ public class TesteController {
 	
 	@Autowired
 	private RestauranteRepository restauranteRepository;
+	
+	@Autowired
+	private RestauranteRepositorytImpl restauranteRepositorytImpl;
 	
 	@GetMapping("/cozinhas/por-nome") //passar por QueryString - QueryParams no Postman - @RequestParam / por-nome?nome=Tailandesa?
 	public List<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome) {
@@ -70,7 +74,7 @@ public class TesteController {
 	
 	@GetMapping("/restaurantes/por-nome-e-frete")
 	public  List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
-		return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
+		return restauranteRepositorytImpl.find(nome, taxaFreteInicial, taxaFreteFinal);
 	}
 }
 
