@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.algaworks.algafood.domain.model.Cozinha;
 
 @Repository
-public interface CozinhaRepository extends JpaRepository<Cozinha, Long> { // herdando JPA Repository
+public interface CozinhaRepository extends CustomJpaRepository<Cozinha, Long> { // herdando JPA Repository
 
 	List<Cozinha> findTodasByNomeContaining(String nome); //nome de uma propriedade da Cozinha, então funciona.
 	//Containing - coloca percent antes e depois simulando like
@@ -21,6 +21,9 @@ public interface CozinhaRepository extends JpaRepository<Cozinha, Long> { // her
 
 }
 
+
+//Atenção a criação de CustomJpaRepository para elementos Generics
+//posso criar uma busca para qq tipo.
 
 //armazenar as nossas cozinhas
 //DDD aggregate

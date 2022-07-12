@@ -4,15 +4,17 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.algaworks.algafood.domain.model.Restaurante;
-import com.algaworks.algafood.infrastructure.repository.RestauranteRepositoryQueries;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, RestauranteRepositoryQueries{
+public interface RestauranteRepository 
+				 extends CustomJpaRepository<Restaurante, Long>, //com isso, ele herda o nosso custom + JpaRepository, já q custom estende Jpa
+				 		 RestauranteRepositoryQueries,
+				 		 JpaSpecificationExecutor<Restaurante> { //
 
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal); //entre inicial e final
 	//pode-se usar "query" no lugar do find. 

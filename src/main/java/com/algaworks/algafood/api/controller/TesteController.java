@@ -14,7 +14,8 @@ import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
-import com.algaworks.algafood.domain.repository.RestauranteRepositorytImpl;
+import com.algaworks.algafood.infrastructure.repository.RestauranteRepositorytImpl;
+import com.algaworks.algafood.infrastructure.repository.spec.RestauranteSpecs;
 
 @RestController
 @RequestMapping("/teste")
@@ -32,6 +33,11 @@ public class TesteController {
 	@GetMapping("/cozinhas/por-nome") //passar por QueryString - QueryParams no Postman - @RequestParam / por-nome?nome=Tailandesa?
 	public List<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome) {
 		return cozinhaRepository.findTodasByNomeContaining(nome);
+	}
+	
+	@GetMapping("/cozinhas/primeira") //passar por QueryString - QueryParams no Postman - @RequestParam / por-nome?nome=Tailandesa?
+	public Optional<Cozinha> cozinhaPrimeiro() {
+		return cozinhaRepository.buscarPrimeiro();
 	}
 	
 	@GetMapping("/cozinhas/unico-por-nome") //passar por QueryString - QueryParams no Postman - @RequestParam / por-nome?nome=Tailandesa?
@@ -75,6 +81,22 @@ public class TesteController {
 	@GetMapping("/restaurantes/por-nome-e-frete")
 	public  List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
 		return restauranteRepositorytImpl.find(nome, taxaFreteInicial, taxaFreteFinal);
+	}
+	
+	@GetMapping("/restaurantes/com-frete-gratis")
+	public  List<Restaurante> restaurantesComFreteGratis(String nome) {
+		
+//		var comFreteGratis = new RestauranteComFreteGratisSpec(); //classe q representa um filtro
+//		var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+//		ou usa o RestauranteSpecs.
+		return restauranteRepository.findAll(RestauranteSpecs.comFreteGratis()
+											.and(RestauranteSpecs.comNomeSemelhante(nome)));
+		//passando os specifications como parâmetros!  
+	}
+	
+	@GetMapping("/restaurantes/priemiro")
+	public  Optional<Restaurante> restaurantesPrimeiro() {
+		return restauranteRepository.buscarPrimeiro();
 	}
 }
 
